@@ -8,6 +8,7 @@ public class ApiApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ApiApplication.class, args);
+       // User user = new User(1, "teste", "teste@mail.com.br", "321");
     }
 
 }
