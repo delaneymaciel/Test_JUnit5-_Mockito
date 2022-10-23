@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -30,14 +32,19 @@ class ResourceExceptionHandlerTest {
         ResponseEntity<StandardError> response = exceptionHandler
                 .objectNotFound(new ObjectNotFoundException("Objeto não encontrado."),
                         new MockHttpServletRequest());
-                assertNotNull(response);
-                assertNotNull(response.getBody());
-                assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-                assertEquals(ResponseEntity.class, response.getClass());
-                assertEquals(StandardError.class, response.getBody().getClass());
-                assertEquals("Objeto não encontrado.", response.getBody().getError());
-                assertEquals(404, response.getBody().getStatus());
 
+
+        assertNotNull(response);
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals(ResponseEntity.class, response.getClass());
+        assertEquals(StandardError.class, response.getBody().getClass());
+        assertEquals("Objeto não encontrado.", response.getBody().getError());
+        assertEquals(404, response.getBody().getStatus());
+
+        response.getBody().getPath(); // vai vir nulo, ó para testar.
+        assertNotEquals("/user/2", response.getBody().getPath());
+        assertNotEquals(LocalDateTime.now(), response.getBody().getTimestemp());
     }
 
     @Test
